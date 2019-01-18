@@ -2,7 +2,14 @@ const childProcess = require('child_process')
 const { resolve } = require('path')
 
 ;(async () => {
-  const parentProcessUrl = resolve(__dirname, '../crawler/index.js')
+  /*
+    获取视频列表
+  */ 
+  const parentProcessUrl = resolve(__dirname, '../crawler/moviesList.js')
+
+  /*
+    利用子进程开启父进程
+  */
   const child = childProcess.fork(parentProcessUrl)
 
   let invoked = false
@@ -19,8 +26,11 @@ const { resolve } = require('path')
     console.log('err', err)
   })
 
-    child.on('message', data => {
-      console.log('data')
-    })
+  /*
+    拿到父进程返回的数据
+  */
+  child.on('message', data => {
+    const { result } = data
+  })
 
 })()

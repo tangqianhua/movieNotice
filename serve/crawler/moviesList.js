@@ -63,11 +63,14 @@ const puppeteer = require('puppeteer')
         })
       })
     }
-    console.log(content)
     return content
   })
 
   await brower.close()
+
+  /*
+    将内容发送给子进程
+  */
   process.send({ result })
   process.exit(0)
 })()
