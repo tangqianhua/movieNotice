@@ -76,7 +76,7 @@ const videoUrl =  `https://movie.douban.com/subject/${doubanId}/`
   }
   const data = {
     doubanId,
-    videoUrl,
+    video: videoInfo.source,
     cover: result.cover
   }
 
