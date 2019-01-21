@@ -24,14 +24,14 @@ const userSchema = new mongoose.Schema({
     }
   }
 })
-userSchema.pre('save', function(next) {
-  if (this.isNew) {
-    this.meta.createdAt = this.meta.updatedAt = Date.now()
-  } else {
-    this.meta.updatedAt = Date.now()
-  }
-})
+// userSchema.pre('save', function(next) {
+//   if (this.isNew) {
+//     this.meta.createdAt = this.meta.updatedAt = Date.now()
+//   } else {
+//     this.meta.updatedAt = Date.now()
+//   }
+// })
 
 const userModel = mongoose.model('userModel', userSchema)
-
+console.log('userModel')
 module.exports = userModel

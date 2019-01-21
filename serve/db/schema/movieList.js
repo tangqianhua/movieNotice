@@ -1,15 +1,25 @@
 const mongoose = require('mongoose')
 const { Mixed, ObjectId } = mongoose.SchemaTypes
-
 const movieSchema = new mongoose.Schema({
   doubanId: {
     type: String,
-    unique: true
+    unique: true,
   }, //  豆瓣id
-  rate: Number,   //    评分
-  title: String,  //  标题
-  summary: String,  //  简介
-  video: String,    //  视频
+  rate: {
+    type: Number,
+    default: 0
+  },   //    评分
+  title: {
+    type:String,
+    default: ''
+  },  //  标题
+  summary: {
+    type:String,
+    default:''
+  },  //  简介
+  video: {
+    type: String
+  },    //  视频
   poster: String,   //  封面
   cover: String,    //    视频图片
 
@@ -38,13 +48,14 @@ const movieSchema = new mongoose.Schema({
     }
   }
 })
-movieSchema.pre('save', function(next) {
-  if (this.isNew) {
-    this.meta.createdAt = this.meta.updatedAt = Date.now()
-  } else {
-    this.meta.updatedAt = Date.now()
-  }
-})
+// movieSchema.pre('save', function(next) {
+//   if (this.isNew) {
+//     this.meta.createdAt = this.meta.updatedAt = Date.now()
+//   } else {
+//     this.meta.updatedAt = Date.now()
+//   }
+// })
 
 const movieModel = mongoose.model('movieModel', movieSchema)
+console.log('movieModel')
 module.exports = movieModel

@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer')
+const log = console.log
 ;(async () => {
   const sleep = time => new Promise(resolve => {
     setTimeout(resolve, time)
@@ -8,27 +9,28 @@ const puppeteer = require('puppeteer')
    * 用指定选项启动一个Chromium浏览器实例
    */ 
   const brower = await puppeteer.launch()
-
+  log('开始爬虫') 
   /*
     创建一个页面.
   */
   const page = await brower.newPage()
-  page.on('console', msg => {
-    for (let i = 0; i < msg.args().length; ++i)
-      console.log(`${i}: ${msg.args()[i]}`); 
-  });
+  log('创建页面')
+  // page.on('console', msg => {
+  //   for (let i = 0; i < msg.args().length; ++i)
+  //     console.log(`${i}: ${msg.args()[i]}`); 
+  // });
 
   /*
     到指定页面的网址
   */
   await page.goto('https://movie.douban.com/tag/#/?sort=R&range=6,10&tags=', {waitUntil: 'networkidle2'})
+  log('页面跳转')
 
-
-  /*
-    截图并保存到当前路径，名称为example.png
-  */
-  await page.screenshot({path: 'example.png'})
-  console.log('截图')
+  // /*
+  //   截图并保存到当前路径，名称为example.png
+  // */
+  // await page.screenshot({path: 'example.png'})
+  // console.log('截图')
   /*
     等待指定的选择器匹配的元素出现在页面中
   */
@@ -59,7 +61,7 @@ const puppeteer = require('puppeteer')
           doubanId,
           title,
           poster,
-
+          rate
         })
       })
     }
@@ -71,6 +73,7 @@ const puppeteer = require('puppeteer')
   /*
     将内容发送给子进程
   */
+  log('爬虫完毕')
   process.send({ result })
   process.exit(0)
 })()

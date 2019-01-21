@@ -16,7 +16,7 @@ module.exports = {
       });
     })
   },
-  initSchema: () => {
+  initSchema: async () => {
     require('./schema/users')
     require('./schema/movieList')
     require('./schema/categoty')

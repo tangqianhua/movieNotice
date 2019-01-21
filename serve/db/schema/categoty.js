@@ -21,14 +21,14 @@ const categorySchema = new mongoose.Schema({
     }
   }
 })
-categorySchema.pre('save', function(next) {
-  if (this.isNew) {
-    this.meta.createdAt = this.meta.updatedAt = Date.now()
-  } else {
-    this.meta.updatedAt = Date.now()
-  }
-})
+// categorySchema.pre('save', function(next) {
+//   if (this.isNew) {
+//     this.meta.createdAt = this.meta.updatedAt = Date.now()
+//   } else {
+//     this.meta.updatedAt = Date.now()
+//   }
+// })
 
 const categoryModel = mongoose.model('categoryModel', categorySchema)
-
+console.log('categoryModel')
 module.exports = categoryModel

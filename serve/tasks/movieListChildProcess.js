@@ -1,6 +1,8 @@
 const childProcess = require('child_process')
 const { resolve } = require('path')
+const mongoose = require('mongoose')
 
+const movieModel = mongoose.model('movieModel')
 ;(async () => {
   /*
     获取视频列表
@@ -23,7 +25,9 @@ const { resolve } = require('path')
     if (invoked) return 
     invoked = true
     let err = code === 0 ? null : new Error('exit code ' + code)
-    console.log('err', err)
+    if (err) {
+      console.log('err', err)
+    }
   })
 
   /*
@@ -31,6 +35,17 @@ const { resolve } = require('path')
   */
   child.on('message', data => {
     const { result } = data
+    console.log('拿到数据')
+    result.map(async (item) => {
+      let movie = await movieModel.findOne({
+        doubanId: item.item
+      })
+      console.log('查询数据库-----------------------')
+      if (!movie) {
+         const res = await movieModel.create(item)
+         console.log(res)
+      }
+    })
   })
 
 })()
